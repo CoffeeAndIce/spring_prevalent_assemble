@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+    http://www.springframework.org/schema/tx
+    http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+    http://www.springframework.org/schema/aop
+    http://www.springframework.org/schema/aop/spring-aop-3.0.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+
+    <context:component-scan base-package="com.coffeeandice"></context:component-scan>
+
+    <context:property-placeholder location="classpath:jdbc.properties"
+                                  ignore-unresolvable="true"/>
+
+
+    <!--配置数据源-->
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <!--Mysql 配置-->
+        <property name="driverClassName" value="${jdbc.driverClassName}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+
+    </bean>
+
+    <!-- myBatis文件 -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <!-- 配置数据库表对应的java实体类 -->
+        <property name="typeAliasesPackage" value="com.coffeeandice.entity"/>
+        <!--指定mapper文件所在的位置-->
+        <property name="mapperLocations" value="classpath:mapper/*.xml"/>
+        <property name="configLocation" value="classpath:mybatisConfig.xml"/>
+    </bean>
+
+    <!--扫描注册接口 -->
+    <!--作用:从接口的基础包开始递归搜索，并将它们注册为 MapperFactoryBean(只有至少一种方法的接口才会被注册;, 具体类将被忽略)-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!-- 指定mybatis接口所在的包 -->
+        <property name="basePackage" value="com.coffeeandice.mapper"/>
+        <!--指定会话工厂 -->
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+    </bean>
+
+    <!--定义事务管理器-->
+    <bean id="transactionManager"
+          class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!-- 开启事务注解@Transactional支持 -->
+    <tx:annotation-driven/>
+
+    <!-- 视图解析器-->
+    <bean  class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/view/"></property>
+        <property name="suffix" value=".jsp"></property>
+    </bean>
+</beans>
