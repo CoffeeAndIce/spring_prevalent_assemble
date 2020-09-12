@@ -17,6 +17,7 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/spring/mybatis/mybatis-xml-jdbc/pom.xml" />
       </list>
     </option>
   </component>

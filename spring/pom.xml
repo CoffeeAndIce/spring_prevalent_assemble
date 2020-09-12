@@ -12,9 +12,9 @@
     <artifactId>spring</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>spring-mybatis-xml-jdbc</module>
-        <module>spring-mybatis-annotation-jdbc</module>
+
         <module>aop</module>
+        <module>mybatis</module>
     </modules>
 
 
@@ -23,11 +23,6 @@
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>spring_prevalent_assemble</artifactId>
-            <version>${project.version}</version>
-        </dependency>
 
         <!-- spring 系列-->
         <dependency>

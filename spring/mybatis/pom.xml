@@ -9,16 +9,15 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>mybatis-annotation-jdbc</artifactId>
+    <artifactId>mybatis</artifactId>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>mybatis-xml-jdbc</module>
+        <module>mybatis-annotation-jdbc</module>
+    </modules>
 
     <dependencies>
-
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>spring</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
         <!--myBatis 及整合包-->
         <dependency>
             <groupId>org.mybatis</groupId>
@@ -37,8 +36,5 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>8.0.13</version>
         </dependency>
-
-
     </dependencies>
-
 </project>

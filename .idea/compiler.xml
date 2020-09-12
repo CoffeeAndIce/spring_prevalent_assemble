@@ -9,10 +9,10 @@
         <outputRelativeToContentRoot value="true" />
         <module name="microsoft" />
         <module name="tts" />
-        <module name="xml-format" />
-        <module name="mybatis-annotation-jdbc" />
-        <module name="mybatis-jdbc" />
         <module name="annotation-format" />
+        <module name="mybatis-annotation-jdbc" />
+        <module name="xml-format" />
+        <module name="mybatis-xml-jdbc" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="8">
