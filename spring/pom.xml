@@ -19,7 +19,7 @@
 
 
     <properties>
-        <spring-base-version>5.1.7.RELEASE</spring-base-version>
+        <spring-base-version>5.3.18</spring-base-version>
     </properties>
 
     <dependencies>
