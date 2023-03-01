@@ -11,6 +11,9 @@
     <modules>
         <module>spring</module>
         <module>microsoft</module>
+        <module>saml</module>
+
+
     </modules>
 
     <dependencies>
