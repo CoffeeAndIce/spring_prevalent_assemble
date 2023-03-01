@@ -1,0 +1,5 @@
+sp:
+  testId: https://coffeeandice/sp/trust
+  consumer: http://localhost:8088/sp/consumer
+server:
+  port: 8088
