@@ -19,6 +19,7 @@
     <modules>
         <module>spr-idpp</module>
         <module>spp-idpp</module>
+        <module>spr-idpr</module>
     </modules>
     <dependencies>
         <dependency>

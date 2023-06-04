@@ -1,3 +1,6 @@
+[TOC]
+
+
 
 # 一、前言
 
@@ -724,7 +727,7 @@ for (int i = 0, len = encryptedAssert.size(); i < len; i++) {
 >
 > 由于为示例，则以简单标识存储在会话中判断。
 >
-> 结合标题分级，这块采用 `HTTPPostEncoder` 帮助传输
+> 结合标题分级，这块采用 `HTTPPostEncoder` 或者 `HTTPPostSimpleSignEncoder`   帮助传输
 
 
 
@@ -825,4 +828,36 @@ private void redirectUserWithRequest(HttpServletResponse httpServletResponse, Au
 ## 1.3、获取IDP返回的讯息
 
 > 由于IDP也是执行post返回，所以逻辑参考 `SP redirect 模式 + IDP post响应模式` 即可
+
+
+
+
+
+# 五、SP redirect模式 + IDP redirect 模式
+
+> 构建一个 SAML Request内容，通过post请求推进至IDP的介面，待校验成功后，IDP将会以 `post` 的形式，通知SP，并将相关讯息推送至SP内。
+>
+> **示例目标：** 整个过程，我们仍以 `邮件地址（EmailAddress）` 作为传递目标，忽略了校验过程。
+
+
+
+## 1.1、SP拦截处理逻辑
+
+> 可以根据自己的基本情况用作拦截，这里简单利用 `过滤器` 对所有请求进行判断。
+>
+> 由于为示例，则以简单标识存储在会话中判断。
+>
+> 结合标题分级，这块采用 `HTTPRedirectDeflateEncoder` 帮助传输 ,与 `SP redirect 模式 + IDP post响应模式`  一样即可
+
+
+
+## 1.2、IDP处理SP的讯息内容
+
+> 这里是全新的一种内容，IDP采用redirect的模式接受内容，因此我们需要以 相对应的解码器处理 `HTTPRedirectDeflateDecoder`
+
+
+
+因此消费内容的时候要作出改变，其实本质上就是用什么加密，则用什么解密，约定好就行。
+
+
 

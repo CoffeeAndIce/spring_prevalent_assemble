@@ -144,13 +144,18 @@ public class AccessFilter implements Filter {
         context.getSubcontext(SecurityParametersContext.class, true)
                 .setSignatureSigningParameters(signatureSigningParameters);
 
-        // OpenSAML提供了HTTPRedirectDefalteEncoder
+        // OpenSAML提供了HTTPPostSimpleSignDecoder
         // 它将帮助我们来对于AuthnRequest进行序列化和签名
-        HTTPRedirectDeflateEncoder encoder = new HTTPRedirectDeflateEncoder();
+        HTTPPostSimpleSignEncoder encoder = new HTTPPostSimpleSignEncoder();
+        VelocityEngine velocityEngine = new VelocityEngine();
+        velocityEngine.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
+        velocityEngine.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
+        velocityEngine.init();
+
 
         encoder.setMessageContext(context);
         encoder.setHttpServletResponse(httpServletResponse);
-
+        encoder.setVelocityEngine(velocityEngine);
         try {
             encoder.initialize();
         } catch (ComponentInitializationException e) {
