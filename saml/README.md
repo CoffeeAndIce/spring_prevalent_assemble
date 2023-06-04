@@ -1,9 +1,9 @@
+
 # 一、前言
 
 > 通常而言，我们都是基于 `ADFS` 来进行接口对接，使用拦截器特定拦截即可。
 >
 > 若是整个系统都需要以其为基准，可以直接使用过滤器。
->
 
 
 
@@ -83,7 +83,7 @@ for (Provider jceProvider : Security.getProviders()) {
 
 方式二： **利用SAML自带的检测方法来测试是否符合** （最保险）
 
-> 谨记，建议在确保这步没问题后再去执行 `1.2.2 步骤` 
+> 谨记，建议在确保这步没问题后再去执行 `1.2.2 步骤`
 
 ①点击 `InitializationService.initialize()` 方法 ，进入` org.opensaml.core.config.InitializationService` 类。
 
@@ -113,7 +113,7 @@ InitializationService.initialize();
 
 > 这里主要作拦截判断是否授权的作用。
 >
-> 整体上就是： 
+> 整体上就是：
 >
 > **存在授权：** 放行
 >
@@ -169,7 +169,7 @@ InitializationService.initialize();
  <!- 则其IDP地址为：https://coffeeandice/idp/sso/signon ->
  ```
 
- **断言绑定：** 也就是用何种协议来使用Artifact取回真正的认证信息。
+**断言绑定：** 也就是用何种协议来使用Artifact取回真正的认证信息。
 
  ```xml
  <!- 例如节点singleSignOnService ->
@@ -178,26 +178,26 @@ InitializationService.initialize();
 <!- 可以参考org.opensaml.saml.common.xml.SAMLConstants ->
  ```
 
- **SP地址：** 我们鉴定应答的地址，说白了就是用于解析IDP处理后的应答讯息的路径地址。
+**SP地址：** 我们鉴定应答的地址，说白了就是用于解析IDP处理后的应答讯息的路径地址。
 
- **Issuer标识：**  发行人的标识（也有推荐使用SP的url）
+**Issuer标识：**  发行人的标识（也有推荐使用SP的url）
 
  ```java
- //可以定义发行人的标识： demo
- Issuer issuer = OpenSAMLUtils.buildSAMLObject(Issuer.class);
- issuer.setValue(getSPIssuerValue());
+//可以定义发行人的标识： demo
+Issuer issuer = OpenSAMLUtils.buildSAMLObject(Issuer.class);
+issuer.setValue(getSPIssuerValue());
  ```
 
- **NameID：** IDP对于用户身份的标识
+**NameID：** IDP对于用户身份的标识
 
  ```xml
- <!- 例如节点singleSignOnService ->
- <singleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="http://localhost:8080/adfs/ldp/"/>
- <NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress</NameIDFormat>
- <NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:persistent</NameIDFormat>
- <NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:transient</NameIDFormat>
- <!- 则其支持 emailAddress、persistent、transient ->
- <!- 对应1、NameIDType.EMAIL 2、NameIDType.PERSISTENT 3、NameIDType.TRANSIENT->
+<!- 例如节点singleSignOnService ->
+<singleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="http://localhost:8080/adfs/ldp/"/>
+<NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress</NameIDFormat>
+<NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:persistent</NameIDFormat>
+<NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:transient</NameIDFormat>
+<!- 则其支持 emailAddress、persistent、transient ->
+<!- 对应1、NameIDType.EMAIL 2、NameIDType.PERSISTENT 3、NameIDType.TRANSIENT->
  ```
 
  ```java
@@ -212,7 +212,7 @@ InitializationService.initialize();
 //整体可以参考类 ： org.opensaml.saml.saml2.core.NameIDType 
  ```
 
- **构造认证上下文：**
+**构造认证上下文：**
 
 >**AuthnContextComparisonTypeEnumeration** ： 主要区分几个级别
 >
@@ -250,8 +250,8 @@ requestedAuthnContext.getAuthnContextClassRefs().add(passwordAuthnContextClassRe
 > 1、 **HTTPArtifactEncoder ：** SAML 2 Artifact Binding encoder, support both HTTP GET and POST.
 >
 > ```
->   顾名思义，支持以 Artifact的模式绑定传输讯息给idp，可以是 HTTP 通过 `URL` 传输也可以通过  `post` 参数传输。
->   使用的时候，可以参考类详情参数，方便切换 GET 与 Post方式
+> 顾名思义，支持以 Artifact的模式绑定传输讯息给idp，可以是 HTTP 通过 `URL` 传输也可以通过  `post` 参数传输。
+> 使用的时候，可以参考类详情参数，方便切换 GET 与 Post方式
 > ```
 >
 > 2、 **HTTPPostEncoder：** SAML 2.0 HTTP Post binding message encoder.
@@ -433,11 +433,11 @@ private void redirectUserWithRequest(HttpServletResponse httpServletResponse, Au
     }
 ```
 
-### 1.1.2、序列化和签名 
+### 1.1.2、序列化和签名
 
 >这里通过处理后，主要分为3个参数传递出去
 >
->①SAMLRequest  
+>①SAMLRequest
 >
 >②SigAlg
 >
@@ -473,7 +473,7 @@ private void redirectUserWithRequest(HttpServletResponse httpServletResponse, Au
 
 ### 1.2.1、通过URL获取Sp处理后的三个参数（可忽略）
 
-> ①SAMLRequest  
+> ①SAMLRequest
 >
 > ②SigAlg
 >
@@ -630,6 +630,8 @@ httpPostEncoder.setHttpServletResponse(response);
 > 这里主要是一个问题，就是存在无法读取模板的问题。
 >
 > 包内 `opensaml-saml-impl` ,建议直接复制模版放入resources内，本例会将默认值内的模版复制一份到 `resources/templates` 下
+>
+> `org\opensaml\opensaml-saml-impl\3.2.0\opensaml-saml-impl-3.2.0.jar!\templates` 会对应在这个包目录下
 
 ```java
 VelocityEngine velocityEngine = new VelocityEngine();
@@ -671,7 +673,7 @@ try {
 
 ## 1.3、获取IDP返回的讯息
 
-> 从上述流程，我们开天眼知道，返回的内容参数内容是 `SAMLResponse` ,用 `HTTPPostDecoder` 进行传递
+> 从上述流程，我们开天眼知道，返回的内容参数内容是  `SAMLResponse`  ,用 `HTTPPostDecoder` 进行传递
 
 ```java
 String samlResponse = req.getParameter("SAMLResponse");
@@ -707,4 +709,120 @@ for (int i = 0, len = encryptedAssert.size(); i < len; i++) {
 ```
 
 
+
+# 四、SP post 模式 + IDP post响应模式
+
+> 构建一个 SAML Request内容，通过post请求推进至IDP的介面，待校验成功后，IDP将会以 `post` 的形式，通知SP，并将相关讯息推送至SP内。
+>
+> **示例目标：** 整个过程，我们仍以 `邮件地址（EmailAddress）` 作为传递目标，忽略了校验过程。
+
+
+
+## 1.1、SP拦截处理逻辑
+
+> 可以根据自己的基本情况用作拦截，这里简单利用 `过滤器` 对所有请求进行判断。
+>
+> 由于为示例，则以简单标识存储在会话中判断。
+>
+> 结合标题分级，这块采用 `HTTPPostEncoder` 帮助传输
+
+
+
+### 1.1.1、利用证书对上下文进行签名
+
+> 这里其余部分与 `SP redirect 模式 + IDP post响应模式` 一致 ，这里展示不一样的内容
+
+
+
+Tips:
+
+> **这里需要配置一个VelocityEngine，否则会触发异常**
+>
+> net.shibboleth.utilities.java.support.component.ComponentInitializationException: VelocityEngine must be supplied
+
+```java
+VelocityEngine velocityEngine = new VelocityEngine();
+velocityEngine.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
+velocityEngine.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
+//謹記，需要初始化后才载入
+velocityEngine.init();
+```
+
+
+
+**所以与之前相比内容就是多了一个引擎模版引用**
+
+```java
+private void redirectUserWithRequest(HttpServletResponse httpServletResponse, AuthnRequest authnRequest) {
+
+    MessageContext context = new MessageContext();
+
+    context.setMessage(authnRequest);
+
+    //关于传输对端实体的信息，对于IDP就是SP，对于SP就是IDP；
+    SAMLPeerEntityContext peerEntityContext =
+        context.getSubcontext(SAMLPeerEntityContext.class, true);
+
+    //端点信息；
+    SAMLEndpointContext endpointContext =
+        peerEntityContext.getSubcontext(SAMLEndpointContext.class, true);
+    endpointContext.setEndpoint(getIPDEndpoint());
+
+    //数据签名环境上线文
+    SignatureSigningParameters signatureSigningParameters = new SignatureSigningParameters();
+    //获得证书，其中包含公钥
+    signatureSigningParameters.setSigningCredential(SPCredentials.getCredential());
+    //ALGO_ID_SIGNATURE_RSA_SHA256
+    signatureSigningParameters.setSignatureAlgorithm(SignatureConstants.ALGO_ID_SIGNATURE_RSA_SHA256);
+
+
+    context.getSubcontext(SecurityParametersContext.class, true)
+        .setSignatureSigningParameters(signatureSigningParameters);
+
+    // OpenSAML提供了HTTPRedirectDefalteEncoder
+    // 它将帮助我们来对于AuthnRequest进行序列化和签名
+    HTTPPostSimpleSignEncoder encoder = new HTTPPostSimpleSignEncoder();
+    VelocityEngine velocityEngine = new VelocityEngine();
+    velocityEngine.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
+    velocityEngine.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
+    velocityEngine.init();
+
+
+    encoder.setMessageContext(context);
+    encoder.setHttpServletResponse(httpServletResponse);
+    encoder.setVelocityEngine(velocityEngine);
+
+    try {
+        encoder.initialize();
+    } catch (ComponentInitializationException e) {
+        throw new RuntimeException(e);
+    }
+
+    logger.info("AuthnRequest: ");
+    OpenSAMLUtils.logSAMLObject(authnRequest);
+
+    logger.info("Redirecting to IDP");
+    try {
+        //*encode*方法将会压缩消息，生成签名，添加结果到URL并从定向用户到Idp.
+        //先使用RFC1951作为默认方法压缩数据，在对压缩后的数据信息Base64编码
+        encoder.encode();
+    } catch (MessageEncodingException e) {
+        throw new RuntimeException(e);
+    }
+}
+```
+
+
+
+## 1.2、IDP处理SP的讯息内容
+
+> 由于IDP也是执行post返回，所以逻辑参考 `SP redirect 模式 + IDP post响应模式` 即可
+
+
+
+
+
+## 1.3、获取IDP返回的讯息
+
+> 由于IDP也是执行post返回，所以逻辑参考 `SP redirect 模式 + IDP post响应模式` 即可
 
